@@ -41,7 +41,7 @@ int RoboteqDevice::Connect(string port)
 	int status;
 	string response;
 	cout<<"Detecting device version...";
-	status = IssueCommand("?", "$1E", 10, response);
+	status = IssueCommand("?", "$1E", WAIT_TIME_MS, response);
 	if(status != RQ_SUCCESS)
 	{
 		cout<<"failed (issue ?$1E response: "<<status<<")."<<endl;
@@ -129,7 +129,7 @@ int RoboteqDevice::SetConfig(int configItem, int index, int value)
 	if(index < 0)
 		return RQ_INDEX_OUT_RANGE;
 
-	int status = IssueCommand("^", command, args, 10, response, true);
+	int status = IssueCommand("^", command, args, WAIT_TIME_MS, response, true);
 	if(status != RQ_SUCCESS)
 		return status;
 	if(response != "+")
@@ -165,7 +165,7 @@ int RoboteqDevice::SetCommand(int commandItem, int index, int value)
 	if(index < 0)
 		return RQ_INDEX_OUT_RANGE;
 
-	int status = IssueCommand("!", command, args, 20, response, true);
+	int status = IssueCommand("!", command, args, WAIT_TIME_MS, response, true);
 	if(status != RQ_SUCCESS)
 		return status;
 	if(response != "+")
@@ -197,7 +197,7 @@ int RoboteqDevice::GetConfig(int configItem, int index, int &result)
 	sprintf(command, "$%02X", configItem);
 	sprintf(args, "%i", index);
 
-	int status = IssueCommand("~", command, args, 10, response);
+	int status = IssueCommand("~", command, args, WAIT_TIME_MS, response);
 	if(status != RQ_SUCCESS)
 		return status;
 
@@ -229,7 +229,7 @@ int RoboteqDevice::GetValue(int operatingItem, int index, int &result)
 	sprintf(command, "$%02X", operatingItem);
 	sprintf(args, "%i", index);
 
-	int status = IssueCommand("?", command, args, 10, response);
+	int status = IssueCommand("?", command, args, WAIT_TIME_MS, response);
 	if(status != RQ_SUCCESS)
 		return status;
 

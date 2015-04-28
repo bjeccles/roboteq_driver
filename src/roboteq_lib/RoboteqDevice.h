@@ -9,6 +9,7 @@ class RoboteqDevice
 {
 private:
   device_driver::DriverSerialPort serial_port;
+  static const int WAIT_TIME_MS = 50;
 protected:
 	int Write(string str);
 	int ReadAll(string &str);
